@@ -12,6 +12,7 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import { yellow } from 'ansi-colors';
 
 class App extends Component {
     state = {
@@ -22,7 +23,7 @@ class App extends Component {
         <Fragment>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView>
-                <View>
+                <View style={styles.container}>
                     <Text>Wahaahahah</Text>
                     <TextInput
                     style={{height: 80, borderColor: 'black', borderWidth: 1}}
@@ -38,7 +39,11 @@ class App extends Component {
 };
 
 const styles = StyleSheet.create({
-  
+    container: {
+        backgroundColor: 'yellow',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    }
 });
 
 export default App;
