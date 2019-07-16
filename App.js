@@ -1,5 +1,6 @@
 
 import React, {Component, Fragment} from 'react';
+import _ from 'underscore';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,7 +10,7 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  ScrollView,
+  FlatList,
 } from 'react-native';
 
 import {
@@ -28,31 +29,23 @@ class App extends Component {
         this.setState({
             places: [
                 ...places,
-                text
+                {
+                    id: _.uniqueId('id_'),
+                    value: text
+                }
             ]
         })
     }
 
     handleDeletePlaces = (id) => {
         const { places } = this.state;
-        const filteredPlaces = places.filter((p,i) => i !== id )
+        const filteredPlaces = places.filter((p,i) => p.id !== id )
         this.setState({
             places: filteredPlaces
         }) 
     }
     
     render() {
-        const generatePlaces = (places) => {
-            return places.map((place, index) => {
-                return (
-                <TouchableHighlight onPress={() => this.handleDeletePlaces(index)}>
-                    <View>
-                        <Text>{place}</Text>
-                    </View>
-                </TouchableHighlight>
-                )
-            })
-        }
         return (
         <Fragment>
             <StatusBar barStyle="dark-content" />
@@ -69,9 +62,18 @@ class App extends Component {
                         onPress={this.handleAddPlaces}
                         title="Add"
                     />
-                    <ScrollView style={{backgroundColor: 'pink'}}>
-                        {generatePlaces(this.state.places)}
-                    </ScrollView>
+                    <FlatList style={{backgroundColor: 'pink'}}
+                        data={this.state.places}
+                        renderItem={({item}) => {
+                            return (
+                                <TouchableHighlight onPress={() => this.handleDeletePlaces(item.id)}>
+                                    <View>
+                                        <Text>{item.value}</Text>
+                                    </View>
+                                </TouchableHighlight>
+                            )
+                        }}
+                    />
                 </View>
             </SafeAreaView>
         </Fragment>
