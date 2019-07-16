@@ -7,6 +7,7 @@ import {
   Text,
   StatusBar,
   TextInput,
+  Button
 } from 'react-native';
 
 import {
@@ -16,9 +17,24 @@ import { yellow } from 'ansi-colors';
 
 class App extends Component {
     state = {
-        text: ''
+        text: '',
+        places: [],
     }
+
+    handleAddPlaces = () => {
+        const { text, places } = this.state;
+        this.setState({
+            places: [
+                ...places,
+                text
+            ]
+        })
+    }
+    
     render() {
+        const generatePlaces = (places) => {
+            return places.map(place => <Text>{place}</Text>)
+        }
         return (
         <Fragment>
             <StatusBar barStyle="dark-content" />
@@ -31,6 +47,11 @@ class App extends Component {
                     onChangeText={(text) => this.setState({ text })}
                     value={this.state.text}
                     />
+                    <Button
+                        onPress={this.handleAddPlaces}
+                        title="Add"
+                    />
+                    {generatePlaces(this.state.places)}
                 </View>
             </SafeAreaView>
         </Fragment>
