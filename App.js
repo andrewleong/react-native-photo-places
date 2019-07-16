@@ -7,7 +7,8 @@ import {
   Text,
   StatusBar,
   TextInput,
-  Button
+  Button,
+  TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -30,10 +31,26 @@ class App extends Component {
             ]
         })
     }
+
+    handleDeletePlaces = (id) => {
+        const { places } = this.state;
+        const filteredPlaces = places.filter((p,i) => i !== id )
+        this.setState({
+            places: filteredPlaces
+        }) 
+    }
     
     render() {
         const generatePlaces = (places) => {
-            return places.map(place => <Text>{place}</Text>)
+            return places.map((place, index) => {
+                return (
+                <TouchableHighlight onPress={() => this.handleDeletePlaces(index)}>
+                    <View>
+                        <Text>{place}</Text>
+                    </View>
+                </TouchableHighlight>
+                )
+            })
         }
         return (
         <Fragment>
@@ -51,7 +68,9 @@ class App extends Component {
                         onPress={this.handleAddPlaces}
                         title="Add"
                     />
-                    {generatePlaces(this.state.places)}
+                    <View style={{backgroundColor: 'pink'}}>
+                        {generatePlaces(this.state.places)}
+                    </View>
                 </View>
             </SafeAreaView>
         </Fragment>
