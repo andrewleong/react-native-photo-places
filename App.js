@@ -9,6 +9,7 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 
 import {
@@ -68,9 +69,9 @@ class App extends Component {
                         onPress={this.handleAddPlaces}
                         title="Add"
                     />
-                    <View style={{backgroundColor: 'pink'}}>
+                    <ScrollView style={{backgroundColor: 'pink'}}>
                         {generatePlaces(this.state.places)}
-                    </View>
+                    </ScrollView>
                 </View>
             </SafeAreaView>
         </Fragment>
